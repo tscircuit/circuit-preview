@@ -23,3 +23,4 @@ export default () => (
 - Uses `@tscircuit/runframe/preview`, `CircuitJsonPreview` is used for displaying the circuit json
 - Uses tsup to bundle all dependencies in browser mode
 - Uses React Cosmos to preview in development
+- Analyze bundle size from `tsup` `--metafile` output https://esbuild.github.io/analyze/

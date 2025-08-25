@@ -1,6 +1,6 @@
 {
   "name": "@tscircuit/circuit-preview",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "module": "dist/index.js",
   "type": "module",
   "files": [
@@ -9,6 +9,7 @@
   "scripts": {
     "start": "cosmos",
     "build": "tsup lib/index.ts --clean --format esm --external react,react-dom,fflate,manifold-3d,three,three-stdlib --dts --no-splitting --platform browser --target es2020",
+    "build:meta": "bun run build --metafile",
     "test:bundle": "node test-rollup-bundle.js"
   },
   "devDependencies": {
