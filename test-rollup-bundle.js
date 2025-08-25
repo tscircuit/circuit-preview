@@ -8,7 +8,7 @@
 import { rollup } from 'rollup';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import { join } from 'path';
-import { readFileSync } from 'fs';
+import { readFileSync, writeFileSync } from 'fs';
 
 async function testBundle() {
   console.log('Testing bundle with Rollup v2.79.2 (jsDelivr version)...');
@@ -51,6 +51,15 @@ async function testBundle() {
 
     console.log('✅ Bundle generated successfully!');
     console.log(`Output chunks: ${output.length}`);
+    
+    // Write the bundle to debug/rollup-output.js
+    for (const chunk of output) {
+      if (chunk.type === 'chunk') {
+        writeFileSync('./debug/rollup-output.js', chunk.code, 'utf8');
+        console.log('📝 Bundle written to ./debug/rollup-output.js');
+        break; // Only write the first chunk
+      }
+    }
     
     // Check for Node.js built-in imports in the output
     const nodeBuiltins = ['crypto', 'module', 'fs', 'path', 'os', 'util', 'stream', 'buffer', 'events'];
