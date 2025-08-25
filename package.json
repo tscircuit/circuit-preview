@@ -1,0 +1,43 @@
+{
+  "name": "@tscircuit/circuit-preview",
+  "version": "0.0.1",
+  "module": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "cosmos"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.2.2",
+    "@radix-ui/react-dialog": "^1.1.15",
+    "@radix-ui/react-dropdown-menu": "^2.1.16",
+    "@radix-ui/react-icons": "^1.3.2",
+    "@radix-ui/react-tabs": "^1.1.13",
+    "@tscircuit/3d-viewer": "^0.0.340",
+    "@tscircuit/assembly-viewer": "^0.0.4",
+    "@tscircuit/core": "^0.0.644",
+    "@tscircuit/create-snippet-url": "^0.0.8",
+    "@tscircuit/pcb-viewer": "^1.11.202",
+    "@tscircuit/runframe": "^0.0.831",
+    "@tscircuit/schematic-viewer": "^2.0.28",
+    "@types/bun": "latest",
+    "class-variance-authority": "^0.7.1",
+    "graphics-debug": "^0.0.62",
+    "ky": "^1.9.0",
+    "lucide-react": "^0.541.0",
+    "posthog-js": "^1.260.2",
+    "react": "^19.1.1",
+    "react-cosmos": "^7.0.0",
+    "react-cosmos-plugin-vite": "^7.0.0",
+    "react-dom": "^19.1.1",
+    "react-error-boundary": "^6.0.0",
+    "react-hot-toast": "^2.6.0",
+    "react-query": "^3.39.3",
+    "tailwind-merge": "^3.3.1",
+    "tsup": "^8.5.0",
+    "vite": "^7.1.3",
+    "zustand": "^5.0.8"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}
