@@ -53,19 +53,41 @@ async function testBundle() {
     console.log(`Output chunks: ${output.length}`);
     
     // Check for Node.js built-in imports in the output
+    const nodeBuiltins = ['crypto', 'module', 'fs', 'path', 'os', 'util', 'stream', 'buffer', 'events'];
+    let foundBuiltins = false;
+    
     for (const chunk of output) {
       if (chunk.type === 'chunk') {
-        if (chunk.code.includes('require("module")') || chunk.code.includes('import "module"') || chunk.code.includes('from "module"')) {
-          console.error('❌ Found Node.js built-in "module" import in output!');
-          console.log('Problematic code snippet:');
-          const lines = chunk.code.split('\n');
-          lines.forEach((line, index) => {
-            if (line.includes('"module"') || line.includes("'module'")) {
-              console.log(`Line ${index + 1}: ${line}`);
+        for (const builtin of nodeBuiltins) {
+          const patterns = [
+            `require("${builtin}")`,
+            `import "${builtin}"`,
+            `from "${builtin}"`,
+            `__require("${builtin}")`,
+            `} from "${builtin}"`,
+            `import { webcrypto as crypto2 } from "${builtin}"`
+          ];
+          
+          for (const pattern of patterns) {
+            if (chunk.code.includes(pattern)) {
+              console.error(`❌ Found Node.js built-in "${builtin}" import in output!`);
+              console.log('Problematic code snippet:');
+              const lines = chunk.code.split('\n');
+              lines.forEach((line, index) => {
+                if (line.includes(`"${builtin}"`) || line.includes(`'${builtin}'`)) {
+                  console.log(`Line ${index + 1}: ${line.trim()}`);
+                }
+              });
+              foundBuiltins = true;
             }
-          });
+          }
         }
       }
+    }
+    
+    if (foundBuiltins) {
+      console.error('\n❌ This bundle will FAIL on jsDelivr due to Node.js built-in imports!');
+      process.exit(1);
     }
 
     await bundle.close();

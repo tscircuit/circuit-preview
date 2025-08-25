@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "start": "cosmos",
-    "build": "tsup lib/index.ts --clean --format esm --external react,react-dom,fflate,manifold-3d,three,three-stdlib --dts --no-splitting",
+    "build": "tsup lib/index.ts --clean --format esm --external react,react-dom,fflate,manifold-3d,three,three-stdlib --dts --no-splitting --platform browser --target es2020",
     "test:bundle": "node test-rollup-bundle.js"
   },
   "devDependencies": {
