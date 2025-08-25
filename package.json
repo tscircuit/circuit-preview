@@ -4,7 +4,8 @@
   "module": "dist/index.js",
   "type": "module",
   "scripts": {
-    "start": "cosmos"
+    "start": "cosmos",
+    "build": "tsup lib/index.ts --format esm --external react,react-dom --dts"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.2.2",
