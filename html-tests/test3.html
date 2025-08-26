@@ -4,15 +4,81 @@
     <meta charset="UTF-8">
     <script src="../dist/index.global.js"></script>
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    
+    <style>
+      body { font-family: Arial, sans-serif; margin: 20px; }
+      .events-container { 
+        margin-top: 20px; 
+        padding: 15px; 
+        border: 1px solid #ccc; 
+        border-radius: 5px; 
+        background: #f9f9f9;
+      }
+      .event-item { 
+        margin: 5px 0; 
+        padding: 8px; 
+        background: #fff; 
+        border-radius: 3px; 
+        border-left: 3px solid #007acc;
+      }
+      .event-timestamp { color: #666; font-size: 0.8em; }
+      .event-data { margin-top: 5px; font-family: monospace; font-size: 0.9em; }
+    </style>
 
     <script type="text/babel">
-      window.tscircuit.render(
-        <board pcbFlex width="10mm" height="10mm">
-          <resistor name="R1" footprint="0402" resistance="1k" />
-          <resistor name="R2" footprint="0402" resistance="1k"/>
-          <trace from=".R1 > .pin1" to=".R2 > .pin1" />
-        </board>
-      )
+      function addEventToDisplay(eventType, eventData) {
+        console.log("Event received:", eventType, eventData);
+      }
+
+      // Listen to the real events emitted from index.ts
+      function setupEventListeners() {
+        window.addEventListener("tscircuit:board:renderPhaseStarted", (event) => {
+          addEventToDisplay("board:renderPhaseStarted", event.detail);
+        });
+        
+        window.addEventListener("tscircuit:autorouting:progress", (event) => {
+          addEventToDisplay("autorouting:progress", event.detail);
+        });
+        
+        window.addEventListener("tscircuit:autorouting:end", (event) => {
+          addEventToDisplay("autorouting:end", event.detail);
+        });
+        
+        window.addEventListener("tscircuit:asyncEffect:start", (event) => {
+          addEventToDisplay("asyncEffect:start", event.detail);
+        });
+        
+        window.addEventListener("tscircuit:asyncEffect:end", (event) => {
+          addEventToDisplay("asyncEffect:end", event.detail);
+        });
+      }
+
+      // Render circuit using the existing window.tscircuit.render function
+      async function renderCircuit() {
+        await window.tscircuit.render(
+          <board pcbFlex width="10mm" height="10mm">
+            <resistor name="R1" footprint="0402" resistance="1k" />
+            <resistor name="R2" footprint="0402" resistance="1k"/>
+            <trace from=".R1 > .pin1" to=".R2 > .pin1" />
+          </board>
+        );
+      }
+
+      // Initialize the app
+      function startApp() {
+        // Set up event listeners for circuit events
+        setupEventListeners();
+        
+        // Start circuit rendering
+        renderCircuit();
+      }
+
+      // Start when DOM is ready
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', startApp);
+      } else {
+        startApp();
+      }
     </script>
   </head>
   <body></body>
