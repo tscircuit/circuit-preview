@@ -1,5 +1,3 @@
-// export * from "./CircuitPreview"
-
 import * as tscircuitCore from "@tscircuit/core"
 import { CircuitJsonPreview } from "@tscircuit/runframe/preview"
 import React from "react"
@@ -36,7 +34,12 @@ if (typeof window !== "undefined") {
 
     // Render the CircuitJsonPreview
     createRoot(rootDiv).render(
-      React.createElement(CircuitJsonPreview, { circuitJson }),
+      React.createElement(CircuitJsonPreview, {
+        circuitJson,
+        defaultToFullScreen: true,
+        isWebEmbedded: true,
+        showFileMenu: true,
+      }),
     )
   }
 }
