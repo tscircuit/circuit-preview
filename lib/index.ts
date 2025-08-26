@@ -10,6 +10,7 @@ declare global {
       processTscircuitTsxScripts: () => void
     }
     React: typeof React
+    emit: (eventName: string, data: any) => void
   }
 }
 
@@ -18,6 +19,12 @@ if (typeof window !== "undefined") {
     ...tscircuitCore,
   } as any
   window.React = React
+
+  // Simple event emitter for runframe communication
+  window.emit = (eventName: string, data: any) => {
+    const event = new CustomEvent(eventName, { detail: data })
+    window.dispatchEvent(event)
+  }
 
   window.tscircuit.render = (component: React.ReactElement) => {
     const circuit = new window.tscircuit.Circuit()
@@ -106,7 +113,10 @@ if (typeof window !== "undefined") {
       circuit.add(component)
       const circuitJson = circuit.getCircuitJson()
 
-      // Render using the existing render function
+      // Communicate to RunFrame standalone that the props should change
+      window.emit("tscircuit:runframe-singleton:propsChanged", { circuitJson })
+
+      // Also render using the existing render function
       window.tscircuit.render(component)
     `
   }

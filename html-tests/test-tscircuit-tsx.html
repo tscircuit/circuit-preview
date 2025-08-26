@@ -16,14 +16,28 @@
       )
     </script>
     
-
+    <!-- Listen for the runframe event to show it's working -->
+    <script>
+      window.addEventListener("tscircuit:runframe-singleton:propsChanged", (event) => {
+        console.log("Received runframe props change:", event.detail);
+        
+        // Show the event data in the page
+        const eventDiv = document.getElementById("event-data");
+        if (eventDiv) {
+          eventDiv.innerHTML = `
+            <h3>RunFrame Event Received:</h3>
+            <pre>${JSON.stringify(event.detail, null, 2)}</pre>
+          `;
+        }
+      });
+    </script>
   </head>
   <body>
     <h1>TSCircuit TSX Script Conversion Test</h1>
     <p>This page demonstrates the automatic conversion of <code>&lt;script type="tscircuit-tsx"&gt;</code> to executable circuit code.</p>
     
-    <div id="circuit-output">
-      <p>Circuit will be rendered below when processed...</p>
+    <div id="event-data">
+      <p>Waiting for runframe event...</p>
     </div>
     
     <h2>Original TSX Script:</h2>
@@ -36,14 +50,5 @@
   )
 &lt;/script&gt;</code></pre>
     
-    <h2>How it works:</h2>
-    <p>The script above gets automatically processed:</p>
-    <ol>
-      <li>JSX is extracted from the export pattern</li>
-      <li>Babel transforms JSX to React.createElement calls</li>
-      <li>A new Circuit instance is created and the component is added</li>
-      <li>The circuit is rendered using CircuitJsonPreview</li>
-    </ol>
-    <p><strong>No manual setup required!</strong> Just include the scripts and use TSX syntax.</p>
   </body>
 </html>
