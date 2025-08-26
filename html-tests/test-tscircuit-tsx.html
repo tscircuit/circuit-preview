@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>TSCircuit TSX Script Test</title>
+    <script src="../dist/index.global.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    
+    <!-- Example of the new tscircuit-tsx script type that gets auto-converted -->
+    <script type="tscircuit-tsx">
+      export default () => (
+        <board width="10mm" height="10mm">
+          <resistor name="R1" resistance="1k" footprint="0402" />
+          <resistor name="R2" resistance="1k" footprint="0402" />
+        </board>
+      )
+    </script>
+    
+    <!-- Listen for the runframe event to show it's working -->
+    <script>
+      window.addEventListener("tscircuit:runframe-singleton:propsChanged", (event) => {
+        console.log("Received runframe props change:", event.detail);
+        
+        // Show the event data in the page
+        const eventDiv = document.getElementById("event-data");
+        if (eventDiv) {
+          eventDiv.innerHTML = `
+            <h3>RunFrame Event Received:</h3>
+            <pre>${JSON.stringify(event.detail, null, 2)}</pre>
+          `;
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <h1>TSCircuit TSX Script Conversion Test</h1>
+    <p>This page demonstrates the automatic conversion of <code>&lt;script type="tscircuit-tsx"&gt;</code> to executable circuit code.</p>
+    <!-- This is where the circuit will be rendered -->
+    <div id="tscircuit-root"></div>
+    <div id="event-data">
+      <p>Waiting for runframe event...</p>
+    </div>
+    
+    <h2>Original TSX Script:</h2>
+    <pre><code>&lt;script type="tscircuit-tsx"&gt;
+  export default () =&gt; (
+    &lt;board width="10mm" height="10mm"&gt;
+      &lt;resistor name="R1" resistance="1k" footprint="0402" /&gt;
+      &lt;capacitor name="C1" capacitance="100nF" footprint="0402" /&gt;
+    &lt;/board&gt;
+  )
+&lt;/script&gt;</code></pre>
+    
+  </body>
+</html>
