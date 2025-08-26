@@ -20,9 +20,10 @@ if (typeof window !== "undefined") {
   } as any
   window.React = React
 
-  window.tscircuit.render = (component: React.ReactElement) => {
+  window.tscircuit.render = async (component: React.ReactElement) => {
     const circuit = new window.tscircuit.Circuit()
     circuit.add(component)
+    await circuit.renderUntilSettled()
 
     const circuitJson = circuit.getCircuitJson()
 

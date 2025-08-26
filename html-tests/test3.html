@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <script src="../dist/index.global.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <script type="text/babel">
+      window.tscircuit.render(
+        <board pcbFlex width="10mm" height="10mm">
+          <resistor name="R1" footprint="0402" resistance="1k" />
+          <resistor name="R2" footprint="0402" resistance="1k"/>
+          <trace from=".R1 > .pin1" to=".R2 > .pin1" />
+        </board>
+      )
+    </script>
+  </head>
+  <body></body>
+</html>
