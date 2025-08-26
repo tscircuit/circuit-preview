@@ -19,31 +19,17 @@ if (typeof window !== "undefined") {
   window.React = React
 
   window.tscircuit.render = async (component: React.ReactElement) => {
+    const autoroutingGraphics: any[] = []
+
     const circuit = new window.tscircuit.Circuit()
     circuit.add(component)
 
-    circuit.on("board:renderPhaseStarted", (event) => {
-      window.dispatchEvent(new CustomEvent("tscircuit:board:renderPhaseStarted", { detail: event }))
+    circuit.on("autorouting:progress", (event) => {
+      console.log("autorouting:progress", event)
+      autoroutingGraphics.push(event.debugGraphics)
     })
-    circuit.on("autorouting:progress", () => {
-      window.dispatchEvent(new CustomEvent("tscircuit:autorouting:progress", { detail: { timestamp: Date.now() } }))
-    })
-    circuit.on("autorouting:end", () => {
-      window.dispatchEvent(new CustomEvent("tscircuit:autorouting:end", { detail: { timestamp: Date.now() } }))
-    })
-    circuit.on("asyncEffect:start", (event) => {
-      const processedEvent = {
-        ...event,
-        componentDisplayName: event.componentDisplayName.replace(/#\d+/, "#"),
-      }
-      window.dispatchEvent(new CustomEvent("tscircuit:asyncEffect:start", { detail: processedEvent }))
-    })
-    circuit.on("asyncEffect:end", (event) => {
-      const processedEvent = {
-        ...event,
-        componentDisplayName: event.componentDisplayName.replace(/#\d+/, "#"),
-      }
-      window.dispatchEvent(new CustomEvent("tscircuit:asyncEffect:end", { detail: processedEvent }))
+    circuit.on("autorouting:end", (event) => {
+      autoroutingGraphics.push(event.debugGraphics)
     })
 
     await circuit.renderUntilSettled()
@@ -65,6 +51,7 @@ if (typeof window !== "undefined") {
         defaultToFullScreen: true,
         isWebEmbedded: true,
         showFileMenu: true,
+        autoroutingGraphics,
       }),
     )
   }
