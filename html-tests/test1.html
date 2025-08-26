@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://unpkg.com/@tscircuit/circuit-preview@0.0.10/dist/index.global.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <script type="text/babel">
+      const { Circuit } = window.tscircuit
+
+      const circuit = new Circuit()
+      circuit.add(<resistor name="R1" resistance="1k" />)
+      document.write(JSON.stringify(circuit.getCircuitJson(), null, 2))
+    </script>
+  </head>
+  <body></body>
+</html>

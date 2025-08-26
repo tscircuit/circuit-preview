@@ -1,14 +1,14 @@
 {
   "name": "@tscircuit/circuit-preview",
-  "version": "0.0.6",
-  "module": "dist/index.js",
+  "version": "0.0.10",
+  "module": "dist/index.global.js",
   "type": "module",
   "files": [
     "dist"
   ],
   "scripts": {
     "start": "cosmos",
-    "build": "tsup lib/index.ts --clean --format esm --external react,react-dom,fflate,manifold-3d,three,three-stdlib --dts --no-splitting --platform browser --target es2020",
+    "build": "tsup lib/index.ts --clean --format iife --external react-dom,fflate,manifold-3d,three,three-stdlib --dts --no-splitting --platform browser --target es2020",
     "build:meta": "bun run build --metafile",
     "test:bundle": "node test-rollup-bundle.js"
   },
@@ -27,6 +27,7 @@
     "@tscircuit/runframe": "^0.0.831",
     "@tscircuit/schematic-viewer": "^2.0.28",
     "@types/bun": "latest",
+    "@types/react-dom": "^19.1.7",
     "class-variance-authority": "^0.7.1",
     "graphics-debug": "^0.0.62",
     "ky": "^1.9.0",
