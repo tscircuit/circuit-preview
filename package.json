@@ -1,6 +1,6 @@
 {
   "name": "@tscircuit/circuit-preview",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "module": "dist/index.global.js",
   "type": "module",
   "files": [
@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "start": "cosmos",
-    "build": "tsup lib/index.ts --clean --format iife --external react-dom,fflate,manifold-3d,three,three-stdlib --dts --no-splitting --platform browser --target es2020",
+    "build": "vite build",
     "build:meta": "bun run build --metafile",
     "test:bundle": "node test-rollup-bundle.js"
   },
@@ -28,6 +28,7 @@
     "@tscircuit/schematic-viewer": "^2.0.28",
     "@types/bun": "latest",
     "@types/react-dom": "^19.1.7",
+    "@vitejs/plugin-react": "^5.0.1",
     "class-variance-authority": "^0.7.1",
     "graphics-debug": "^0.0.62",
     "ky": "^1.9.0",
@@ -44,6 +45,7 @@
     "tailwind-merge": "^3.3.1",
     "tsup": "^8.5.0",
     "vite": "^7.1.3",
+    "vite-plugin-dts": "^4.5.4",
     "zustand": "^5.0.8"
   },
   "peerDependencies": {

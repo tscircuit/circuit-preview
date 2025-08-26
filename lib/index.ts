@@ -15,7 +15,11 @@ declare global {
 }
 
 if (typeof window !== "undefined") {
-  window.tscircuit = tscircuitCore as any
+  window.tscircuit = {
+    ...tscircuitCore,
+  } as any
+  window.React = React
+
   window.tscircuit.render = (component: React.ReactElement) => {
     const circuit = new window.tscircuit.Circuit()
     circuit.add(component)
@@ -34,8 +38,5 @@ if (typeof window !== "undefined") {
     createRoot(rootDiv).render(
       React.createElement(CircuitJsonPreview, { circuitJson }),
     )
-  }
-  if (!window.React) {
-    window.React = React
   }
 }
