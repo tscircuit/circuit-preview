@@ -9,6 +9,7 @@
   "scripts": {
     "start": "cosmos",
     "build": "vite build",
+    "vercel-build": "cosmos-export",
     "build:meta": "bun run build --metafile",
     "test:bundle": "node test-rollup-bundle.js"
   },
