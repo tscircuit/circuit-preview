@@ -8,7 +8,18 @@ export const CircuitPreview = (props: { circuit: ReactElement }) => {
   useEffect(() => {
     const rootCircuit = new Circuit()
     rootCircuit.add(props.circuit as ReactElement)
-    setCircuitJson(rootCircuit.getCircuitJson())
+    const circuitJsonData = rootCircuit.getCircuitJson()
+
+    // Check for errors and warnings with source_ types
+    for (const element of circuitJsonData) {
+      console.log(element)
+      const { error_type, warning_type, type, message } = element as any
+      if (error_type || warning_type) {
+        console.warn(`${type}:  ${message}`)
+      }
+    }
+
+    setCircuitJson(circuitJsonData)
     // TODO handle circuit json changes with renderUntilSettled
   }, [])
 
