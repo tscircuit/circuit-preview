@@ -1,5 +1,6 @@
 import * as tscircuitCore from "@tscircuit/core"
 import { CircuitJsonPreview } from "@tscircuit/runframe/preview"
+import * as Babel from "@babel/standalone"
 import React from "react"
 import { createRoot } from "react-dom/client"
 
@@ -9,6 +10,7 @@ declare global {
       render: (component: React.ReactElement) => void
     }
     React: typeof React
+    Babel: typeof Babel
   }
 }
 
@@ -17,6 +19,7 @@ if (typeof window !== "undefined") {
     ...tscircuitCore,
   } as any
   window.React = React
+  window.Babel = Babel
 
   window.tscircuit.render = async (component: React.ReactElement) => {
     const autoroutingGraphics: any[] = []
