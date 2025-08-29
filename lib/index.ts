@@ -22,20 +22,8 @@ if (typeof window !== "undefined") {
   window.Babel = Babel
 
   window.tscircuit.render = async (component: React.ReactElement) => {
-    /** TODO DO NOT STORE AUTOROUTING GRAPHICS IN ARRAY */
-    const autoroutingGraphics: any[] = []
-
     const circuit = new window.tscircuit.Circuit()
     circuit.add(component)
-
-    circuit.on("autorouting:progress", (event) => {
-      /** TODO DO NOT STORE AUTOROUTING GRAPHICS IN ARRAY */
-      autoroutingGraphics.push(event.debugGraphics)
-    })
-    circuit.on("autorouting:end", (event) => {
-      /** TODO DO NOT STORE AUTOROUTING GRAPHICS IN ARRAY */
-      autoroutingGraphics.push(event.debugGraphics)
-    })
 
     /**
      * TODO SHOW CIRCUIT JSON via getCircuitJson PRIOR TO
@@ -71,7 +59,6 @@ if (typeof window !== "undefined") {
         defaultToFullScreen: true,
         isWebEmbedded: true,
         showFileMenu: true,
-        autoroutingGraphics,
       }),
     )
   }
