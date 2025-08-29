@@ -24,7 +24,7 @@
     "@rollup/plugin-node-resolve": "^16.0.1",
     "@tscircuit/3d-viewer": "^0.0.340",
     "@tscircuit/assembly-viewer": "^0.0.4",
-    "@tscircuit/core": "^0.0.644",
+    "@tscircuit/core": "^0.0.661",
     "@tscircuit/create-snippet-url": "^0.0.8",
     "@tscircuit/pcb-viewer": "^1.11.202",
     "@tscircuit/runframe": "^0.0.835",
