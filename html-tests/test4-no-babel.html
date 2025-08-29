@@ -3,74 +3,64 @@
   <head>
     <meta charset="UTF-8">
     <script src="../dist/index.global.js"></script>
-
     <script type="text/babel">
       window.tscircuit.render(
-        <board>
-          <jumper
-            name="JP6"
+        <board pcbPack>
+          {/* 555 timer IC */}
+          <chip
+            name="U1"
+            footprint="soic8"
             pinLabels={{
-              pin1: ["GND"],
-              pin2: ["VOUT"],
+              pin1: "GND",
+              pin2: "TRIG",
+              pin3: "OUT",
+              pin4: "RESET",
+              pin5: "CTRL",
+              pin6: "THRES",
+              pin7: "DISCH",
+              pin8: "VCC",
             }}
-            footprint="pinrow2_p2.54_id1.016_od1.88_nosquareplating_pinlabeltextalignleft_pinlabelorthogonal"
-            pcbX={-2}
-            pcbY={2}
-            pcbRotation={90}
-            schY={0.2}
-            schX={-3}
+            schPinArrangement={{
+              leftSide:  { direction: "top-to-bottom", pins: ["RESET","CTRL","THRES","TRIG"] },
+              rightSide: { direction: "top-to-bottom", pins: ["VCC","OUT","DISCH","GND"] },
+            }}
           />
-          <resistor
-            resistance="4.7k"
-            name="R1"
-            pcbRotation={270}
-            pcbY={2}
-            pcbX={3}
-            footprint="0603"
-            schY={1}
-            schX={2}
-            schRotation={90}
-          />
-          <trace from=".R1 > .pin1" to=".JP6 > .pin1" />
-          <trace from=".SJ1 > .pin2" to=".JP6 > .pin1" />
-          <trace from=".R1 > .pin2" to=".JP6 > .pin2" />
-          <trace from=".SJ1 > .pin2" to=".R1 > .pin2" />
-          <trace from=".SJ2 > .pin2" to=".R1 > .pin2" />
-          <solderjumper
-            cadModel={null}
-            name="SJ1"
+
+          {/* Timing components */}
+          <resistor  name="R1" resistance="1k"   />
+          <resistor  name="R2" resistance="10k"   footprint="0805" />
+          <capacitor name="C1" capacitance="10uF" footprint="1206" />
+          <capacitor name="C2" capacitance="0.01uF" footprint="0805" />
+
+          {/* Pin header for power + output */}
+          <pinheader
+            name="J1"
             pinCount={3}
-            bridgedPins={[
-              ["1", "2"],
-              ["2", "3"],
-            ]}
-            footprint="solderjumper3_bridged123_p0.8_pw0.635_ph1.270"
-            pcbX="0"
-            pcbY="-3"
-            layer="bottom"
-            schY={2}
-            schX={2.5}
-            schRotation={180}
+            footprint="1x03"
+            pinLabels={{ pin1:"GND", pin2:"VCC", pin3:"OUT" }}
+            schPinArrangement={{
+              leftSide: { direction:"top-to-bottom", pins:["GND","VCC","OUT"] }
+            }}
           />
-          <solderjumper
-            cadModel={null}
-            name="SJ2"
-            pinCount={3}
-            bridgedPins={[
-              ["1", "2"],
-              ["2", "3"],
-            ]}
-            footprint="solderjumper3_bridged123_p0.8_pw0.635_ph1.270"
-            pcbX="8"
-            pcbY="3"
-            layer="bottom"
-            schY={2}
-            schX={2.5}
-            schRotation={180}
-          />
+
+          {/* Connections */}
+          <trace from="U1.VCC"   to="J1.VCC" />
+          <trace from="U1.GND"   to="J1.GND" />
+          <trace from="U1.OUT"   to="J1.OUT" />
+          <trace from="U1.RESET" to="U1.VCC" />
+          <trace from="U1.CTRL"  to="C2.pin1" />
+          <trace from="C2.pin2"  to="J1.GND" />
+          <trace from="U1.THRES" to="U1.TRIG" />
+          <trace from="J1.VCC"   to="R1.pin1" />
+          <trace from="R1.pin2"  to="U1.DISCH" />
+          <trace from="U1.DISCH" to="R2.pin1" />
+          <trace from="R2.pin2"  to="U1.THRES" />
+          <trace from="U1.THRES" to="C1.pin1" />
+          <trace from="C1.pin2"  to="J1.GND" />
         </board>
       )
     </script>
   </head>
   <body></body>
 </html>
+    
