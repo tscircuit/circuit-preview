@@ -3,7 +3,9 @@ import { useEffect, useState, type ReactElement } from "react"
 import { Circuit } from "@tscircuit/core"
 import { CircuitJsonPreview } from "@tscircuit/runframe"
 
-export const CircuitPreview = (props: { circuit: ReactElement }) => {
+export const CircuitPreview = (props: {
+  circuitReactElement: ReactElement
+}) => {
   const [circuitJson, setCircuitJson] = useState<any[] | null>(null)
   const [autoroutingGraphics, setAutoroutingGraphics] = useState<any[] | null>(
     null,
@@ -11,7 +13,7 @@ export const CircuitPreview = (props: { circuit: ReactElement }) => {
 
   useEffect(() => {
     const rootCircuit = new Circuit()
-    rootCircuit.add(props.circuit as ReactElement)
+    rootCircuit.add(props.circuitReactElement as ReactElement)
     const initialCircuitJson = rootCircuit.getCircuitJson()
 
     setCircuitJson(initialCircuitJson)
@@ -21,6 +23,10 @@ export const CircuitPreview = (props: { circuit: ReactElement }) => {
       if (Date.now() - lastAutoroutingProgressAt > 200) {
         setAutoroutingGraphics(event.debugGraphics)
       }
+    })
+
+    rootCircuit.on("autorouting:error", (event) => {
+      setAutoroutingGraphics(null)
     })
 
     rootCircuit.on("autorouting:end", (event) => {
@@ -37,6 +43,7 @@ export const CircuitPreview = (props: { circuit: ReactElement }) => {
 
     rootCircuit.renderUntilSettled().then(() => {
       setCircuitJson(rootCircuit.getCircuitJson())
+      setAutoroutingGraphics(null)
     })
   }, [])
 
@@ -46,7 +53,8 @@ export const CircuitPreview = (props: { circuit: ReactElement }) => {
       defaultToFullScreen
       isWebEmbedded
       showFileMenu
-      autoroutingGraphics={autoroutingGraphics}
+      // Causing some "hanging broken graphics" issues
+      // autoroutingGraphics={autoroutingGraphics}
     />
   )
 }
