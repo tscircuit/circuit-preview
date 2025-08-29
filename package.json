@@ -28,7 +28,7 @@
     "@tscircuit/core": "^0.0.661",
     "@tscircuit/create-snippet-url": "^0.0.8",
     "@tscircuit/pcb-viewer": "^1.11.202",
-    "@tscircuit/runframe": "^0.0.841",
+    "@tscircuit/runframe": "^0.0.844",
     "@tscircuit/schematic-viewer": "^2.0.28",
     "@types/babel__standalone": "^7.1.9",
     "@types/bun": "latest",
