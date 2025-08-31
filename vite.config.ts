@@ -16,8 +16,8 @@ export default defineConfig({
     },
   },
   build: {
-    sourcemap: true,
-    minify: false,
+    // sourcemap: true,
+    // minify: false,
     lib: {
       entry: resolve(__dirname, "lib/index.ts"),
       name: "CircuitPreview",
