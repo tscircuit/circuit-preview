@@ -4,6 +4,7 @@ import * as Babel from "@babel/standalone"
 import React from "react"
 import { createRoot } from "react-dom/client"
 import { CircuitPreview } from "./CircuitPreview"
+import * as Manifold from "manifold-3d"
 
 declare global {
   interface Window {
@@ -12,6 +13,7 @@ declare global {
     }
     React: typeof React
     Babel: typeof Babel
+    ManifoldModule: typeof Manifold.default
   }
 }
 
@@ -21,6 +23,7 @@ if (typeof window !== "undefined") {
   } as any
   window.React = React
   window.Babel = Babel
+  window.ManifoldModule = Manifold.default
 
   window.tscircuit.render = async (circuitReactElement: React.ReactElement) => {
     // Create root div if it doesn't exist
