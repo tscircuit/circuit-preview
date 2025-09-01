@@ -1,6 +1,6 @@
 {
   "name": "@tscircuit/circuit-preview",
-  "version": "0.0.27",
+  "version": "0.0.29",
   "module": "dist/index.global.js",
   "type": "module",
   "files": [
