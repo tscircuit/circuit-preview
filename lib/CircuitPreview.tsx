@@ -42,7 +42,8 @@ export const CircuitPreview = (props: {
     }
 
     rootCircuit.renderUntilSettled().then(() => {
-      setCircuitJson(rootCircuit.getCircuitJson())
+      // setCircuitJson(rootCircuit.getCircuitJson())
+      setCircuitJson([...rootCircuit.getCircuitJson()])
       setAutoroutingGraphics(null)
     })
   }, [])
