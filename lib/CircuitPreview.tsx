@@ -1,7 +1,9 @@
 // import { CircuitJsonPreview } from "@tscircuit/runframe/preview"
-import { useEffect, useState, type ReactElement } from "react"
+
 import { Circuit } from "@tscircuit/core"
 import { CircuitJsonPreview } from "@tscircuit/runframe"
+import { type ReactElement, useEffect, useState } from "react"
+import { getCircuitJsonPreviewKey } from "./get-circuit-json-preview-key"
 
 export const CircuitPreview = (props: {
   circuitReactElement: ReactElement
@@ -48,8 +50,11 @@ export const CircuitPreview = (props: {
     })
   }, [])
 
+  const circuitJsonPreviewKey = getCircuitJsonPreviewKey(circuitJson)
+
   return (
     <CircuitJsonPreview
+      key={circuitJsonPreviewKey}
       circuitJson={circuitJson}
       defaultToFullScreen
       isWebEmbedded
