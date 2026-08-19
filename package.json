@@ -1,6 +1,10 @@
 {
   "name": "@tscircuit/circuit-preview",
   "version": "0.0.31",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tscircuit/circuit-preview.git"
+  },
   "module": "dist/index.global.js",
   "type": "module",
   "files": [
